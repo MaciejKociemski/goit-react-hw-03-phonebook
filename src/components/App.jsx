@@ -19,16 +19,13 @@ export class App extends Component {
   componentDidMount() {
     const storedContacts = localStorage.getItem('contacts');
     if (storedContacts) {
-      
       this.setState({ contacts: JSON.parse(storedContacts) });
-      
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-
     }
   }
 
@@ -39,7 +36,7 @@ export class App extends Component {
 
   addContact = ({ name, number }) => {
     const contactExists = this.state.contacts.find(
-      (value) => value.name.toLowerCase() === name.toLowerCase()
+      value => value.name.toLowerCase() === name.toLowerCase()
     );
 
     contactExists

@@ -5,7 +5,6 @@ export const FilterByName = ({ filter, onChangeInput }) => {
   return (
     <label className={css.label}>
       Find contacts by name
-      <br />
       <input
         type="text"
         name="filter"
