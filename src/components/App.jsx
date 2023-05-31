@@ -16,6 +16,22 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const storedContacts = localStorage.getItem('contacts');
+    if (storedContacts) {
+      const parsedContacts =JSON.parse(storedContacts)
+      this.setState({ contacts: JSON.parse(storedContacts) });
+      console.info('kontakty załadowane z local storage',parsedContacts)
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));console.info('Contacts saved to local storage:', this.state.contacts);
+
+    }
+  }
+
   handleInputChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
@@ -28,8 +44,8 @@ export class App extends Component {
 
     contactExists
       ? alert(`${name} is already in contacts`)
-      : this.setState(oldState => {
-          const list = [...oldState.contacts];
+      : this.setState(prevState => {
+          const list = [...prevState.contacts];
           list.push({
             id: nanoid(),
             name: name,
@@ -64,7 +80,7 @@ export class App extends Component {
           onChangeInput={this.handleInputChange}
         />
         <ContactList
-          onContactDelete={this.deleteContact}
+          deleteContact={this.deleteContact}
           contacts={this.filterContactsByName()}
         />
       </div>
