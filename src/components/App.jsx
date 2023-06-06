@@ -29,8 +29,7 @@ export class App extends Component {
     }
   }
 
-  handleInputChange = e => {
-    const { name, value } = e.currentTarget;
+  handleInputChange = ({ currentTarget: { name, value } }) => {
     this.setState({ [name]: value });
   };
 
